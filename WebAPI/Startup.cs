@@ -1,3 +1,5 @@
+using ECommerceProjectWithWebAPI.Business.Abstract;
+using ECommerceProjectWithWebAPI.Business.Concrete;
 using ECommerceProjectWithWebAPI.DAL.Abstract;
 using ECommerceProjectWithWebAPI.DAL.Concrete.Contexts;
 using ECommerceProjectWithWebAPI.DAL.Concrete.EntityFramework;
@@ -26,6 +28,7 @@ namespace WebAPI
             services.AddDbContext<ECommerceProjectWithWebAPIContext>(options => options.UseSqlServer("Server=DESKTOP-DPKMFQT\\S2019; Database=ECommerceProjectWithWebAPI; uid=sa; pwd=1;"));
             services.AddControllers();
             services.AddTransient<IUserDal, EfUserDal>();
+            services.AddTransient<IUserService, UserService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
