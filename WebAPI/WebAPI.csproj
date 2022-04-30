@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Business\ECommerceProjectWithWebAPI.Business.csproj" />
     <ProjectReference Include="..\ECommerceProjectWithWebAPI.DAL\ECommerceProjectWithWebAPI.DAL.csproj" />
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Entities\ECommerceProjectWithWebAPI.Entities.csproj" />
   </ItemGroup>
 
 </Project>
