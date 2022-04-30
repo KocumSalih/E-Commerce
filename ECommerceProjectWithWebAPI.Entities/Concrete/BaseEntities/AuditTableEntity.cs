@@ -10,9 +10,9 @@ namespace ECommerceProjectWithWebAPI.Entities.Concrete.BaseEntities
 
     public class AuditTableEntity : BaseEntity, ICreatedEntity,IUpdatedEntity
     {
-        public int CreatedUser { get ; set ; }
+        public int CreatedUserId { get ; set ; }
         public DateTime CreatedDate { get; set; }
-        int? IUpdatedEntity.CreatedUser { get; set; }
-        DateTime? IUpdatedEntity.CreatedDate { get; set ; }
+        public int? UpdatedUserId { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace ECommerceProjectWithWebAPI.Entities.Abstract
 {
     public interface IUpdatedEntity
     {
-        int? CreatedUser { get; set; }
-        DateTime? CreatedDate { get; set; }
+        int? UpdatedUserId { get; set; }
+        DateTime? UpdatedDate { get; set; }
     }
 }

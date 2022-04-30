@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.DAL\ECommerceProjectWithWebAPI.DAL.csproj" />
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Entities\ECommerceProjectWithWebAPI.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
