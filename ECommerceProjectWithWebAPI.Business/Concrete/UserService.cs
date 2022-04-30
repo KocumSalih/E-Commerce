@@ -20,19 +20,19 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
         public async Task<IEnumerable<UserDetailDto>> GetListAsync()
         {
             List<UserDetailDto> usersDetail = new List<UserDetailDto>();
-            var response =await _userDal.GetListAsync();
+            var response = await _userDal.GetListAsync();
             foreach (var item in response)
             {
-                usersDetail.Add( new UserDetailDto()
+                usersDetail.Add(new UserDetailDto()
                 {
-                    FirstName=item.FirstName,
-                    LastName=item.LastName,
-                    Gender=item.Gender==true?"Erkek":"Kadın",
-                    DateOfBirth=item.DateOfBirth,
-                    UserName=item.UserName,
-                    Address=item.Address,
-                    Email=item.Email,
-                    UserId=item.Id
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Gender = item.Gender == true ? "Erkek" : "Kadın",
+                    DateOfBirth = item.DateOfBirth,
+                    UserName = item.UserName,
+                    Address = item.Address,
+                    Email = item.Email,
+                    UserId = item.Id
                 });
             }
 
@@ -41,25 +41,28 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
 
         public async Task<UserDto> GetByIdAsync(int id)
         {
-            var user = await _userDal.GetAsync(x=>x.Id==id);
-            UserDto userDto = new UserDto()
-            { 
-                Address=user.Address,
-                DateOfBirth=user.DateOfBirth,
-                Email=user.Email,
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                UserName=user.UserName,
-                Gender=user.Gender,
-                UserId=user.Id
-            };
-
-            return userDto;
+            var user = await _userDal.GetAsync(x => x.Id == id);
+            if (user!=null)
+            {
+                UserDto userDto = new UserDto()
+                {
+                    Address = user.Address,
+                    DateOfBirth = user.DateOfBirth,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.UserName,
+                    Gender = user.Gender,
+                    UserId = user.Id
+                };
+                return userDto; 
+            }
+            return null;
         }
 
         public async Task<UserDto> AddAsync(UserAddDto entity)
         {
-            User user=new User()
+            User user = new User()
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
@@ -68,8 +71,8 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 DateOfBirth = entity.DateOfBirth,
                 UserName = entity.UserName,
                 Address = entity.Address,
-                CreatedDate=DateTime.Now,
-                CreatedUserId=1,
+                CreatedDate = DateTime.Now,
+                CreatedUserId = 1,
                 Email = entity.Email,
                 Password = entity.Password
             };
@@ -85,7 +88,7 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 UserName = userAdd.UserName,
                 Address = userAdd.Address,
                 Email = userAdd.Email,
-                UserId=userAdd.Id
+                UserId = userAdd.Id
             };
 
             return userDto;
@@ -104,11 +107,11 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 Address = entity.Address,
                 Email = entity.Email,
                 Id = entity.UserId,
-                CreatedDate=getUser.CreatedDate,
-                CreatedUserId=getUser.CreatedUserId,
-                Password=getUser.Password,
-                UpdatedDate=DateTime.Now,
-                UpdatedUserId=1
+                CreatedDate = getUser.CreatedDate,
+                CreatedUserId = getUser.CreatedUserId,
+                Password = getUser.Password,
+                UpdatedDate = DateTime.Now,
+                UpdatedUserId = 1
             };
             var userUpdated = await _userDal.UpdateAsync(user);
 
@@ -122,7 +125,7 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 Address = userUpdated.Address,
                 Email = userUpdated.Email,
                 Password = userUpdated.Password,
-                UserId= userUpdated.Id
+                UserId = userUpdated.Id
             };
             return userUpdateDto;
         }
@@ -130,6 +133,6 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
         public async Task<bool> DeleteAsync(int id)
         {
             return await _userDal.DeleteAsync(id);
-        }        
+        }
     }
 }
