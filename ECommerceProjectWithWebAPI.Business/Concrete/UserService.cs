@@ -53,7 +53,8 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                     LastName = user.LastName,
                     UserName = user.UserName,
                     Gender = user.Gender,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Password=user.Password
                 };
                 return userDto; 
             }
