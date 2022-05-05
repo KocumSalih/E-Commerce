@@ -22,12 +22,13 @@ namespace WebAPIWithCoreMvc.Controllers
         public UsersController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-        } 
+        }
         #endregion
 
+        #region Crud
         public async Task<IActionResult> Index()
         {
-            var users = await _httpClient.GetFromJsonAsync<List<UserDetailDto>>(url+"Users/GetList");
+            var users = await _httpClient.GetFromJsonAsync<List<UserDetailDto>>(url + "Users/GetList");
             return View(users);
         }
 
@@ -46,24 +47,67 @@ namespace WebAPIWithCoreMvc.Controllers
                 FirstName = userAddViewModel.FirstName,
                 LastName = userAddViewModel.LastName,
                 Gender = userAddViewModel.GenderId == 1 ? true : false,
-                Address=userAddViewModel.Address,
-                DateOfBirth=userAddViewModel.DateOfBirth,
-                Email=userAddViewModel.Email,
-                Password=userAddViewModel.Password,
-                UserName=userAddViewModel.UserName,
+                Address = userAddViewModel.Address,
+                DateOfBirth = userAddViewModel.DateOfBirth,
+                Email = userAddViewModel.Email,
+                Password = userAddViewModel.Password,
+                UserName = userAddViewModel.UserName,
             };
-            HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync(url+"Users/Add",userAddDto);
+            HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync(url + "Users/Add", userAddDto);
             if (responseMessage.IsSuccessStatusCode)
                 return RedirectToAction("Index");
 
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var user = await _httpClient.GetFromJsonAsync<UserDto>(url + "Users/GetById/" + id);
+            UserUpdateViewModel userUpdateViewModel = new UserUpdateViewModel()
+            {
+                Password = user.Password,
+                GenderId = user.Gender == true ? 1 : 2,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                DateOfBirth = user.DateOfBirth,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+            ViewBag.GenderList = GenderFill();
+            return View(userUpdateViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, UserUpdateViewModel userUpdateViewModel)
+        {
+            var user = await _httpClient.GetFromJsonAsync<UserDto>(url + "Users/GetById/" + id);
+            UserUpdateDto userUpdateDto = new UserUpdateDto()
+            {
+                Password = userUpdateViewModel.Password,
+                Gender = userUpdateViewModel.GenderId == 1 ? true : false,
+                FirstName = userUpdateViewModel.FirstName,
+                LastName = userUpdateViewModel.LastName,
+                Address = userUpdateViewModel.Address,
+                DateOfBirth = userUpdateViewModel.DateOfBirth,
+                Email = userUpdateViewModel.Email,
+                UserName = userUpdateViewModel.UserName,
+                UserId=id
+            };
+            HttpResponseMessage httpResponseMessage = await _httpClient.PutAsJsonAsync(url+"Users/Update", userUpdateDto);
+            if (httpResponseMessage.IsSuccessStatusCode)
+                return RedirectToAction("Index");
+            return View();
+        }
+        #endregion
+
+        #region Methods
         private List<Gender> GenderFill()
         {
             List<Gender> genders = new List<Gender>();
-            genders.Add(new Gender(){Id=1,GenderName="Erkek"});
-            genders.Add(new Gender(){Id=2,GenderName="Kadın"});
+            genders.Add(new Gender() { Id = 1, GenderName = "Erkek" });
+            genders.Add(new Gender() { Id = 2, GenderName = "Kadın" });
             return genders;
         }
 
@@ -71,6 +115,7 @@ namespace WebAPIWithCoreMvc.Controllers
         {
             public int Id { get; set; }
             public string GenderName { get; set; }
-        }
+        } 
+        #endregion
     }
 }
