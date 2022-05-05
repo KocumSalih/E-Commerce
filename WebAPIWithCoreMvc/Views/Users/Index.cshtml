@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos.UserDetailDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h1>Kullanıcılar</h1>
+<a class="btn btn-primary mb-3" asp-action="Add">Kullanıcı Ekle</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>User Name</td>
+            <td>Adı</td>
+            <td>Soyadı</td>
+            <td>Cinsiyet</td>
+            <td>Doğum Tarihi</td>
+            <td>Email</td>
+            <td>Adres</td>
+            <td>İşlemler</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserId</td>
+                <td>@item.UserName</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Gender</td>
+                <td>@item.DateOfBirth</td>
+                <td>@item.Email</td>
+                <td>@item.Address</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@item.UserId" class="badge badge-info">Düzenle</a>
+                    <a asp-action="Delete" asp-route-id="@item.UserId" class="badge badge-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
