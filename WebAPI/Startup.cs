@@ -1,6 +1,8 @@
 using ECommerceProjectWithWebAPI.Business.Abstract;
 using ECommerceProjectWithWebAPI.Business.Concrete;
 using ECommerceProjectWithWebAPI.Core.Helpers.JWT;
+using ECommerceProjectWithWebAPI.Core.Utilities.Security.Token;
+using ECommerceProjectWithWebAPI.Core.Utilities.Security.Token.Jwt;
 using ECommerceProjectWithWebAPI.DAL.Abstract;
 using ECommerceProjectWithWebAPI.DAL.Concrete.Contexts;
 using ECommerceProjectWithWebAPI.DAL.Concrete.EntityFramework;
@@ -87,6 +89,7 @@ namespace WebAPI
 
             services.AddTransient<IUserDal, EfUserDal>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITokenService, JwtTokenService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
