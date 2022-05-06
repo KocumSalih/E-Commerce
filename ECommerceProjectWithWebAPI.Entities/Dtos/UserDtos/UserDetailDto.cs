@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerceProjectWithWebAPI.Core.Entity.Abstract;
+using System;
 
 namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
 {
-    using Abstract;
-
     public class UserDetailDto:IDto
     {
         public int UserId { get; set; }

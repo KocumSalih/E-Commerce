@@ -1,9 +1,8 @@
 ﻿using System;
+using ECommerceProjectWithWebAPI.Core.Entity.Abstract;
 
 namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
-{
-    using Abstract;
-
+{   
     public class UserUpdateDto:IDto
     {
         public int UserId { get; set; }

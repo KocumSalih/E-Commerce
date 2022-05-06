@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ECommerceProjectWithWebAPI.Core.Entity.Concrete;
+using System;
 
 namespace ECommerceProjectWithWebAPI.Entities.Concrete
 {
-    using BaseEntities;
     public class User:AuditTableEntity
     {
         public string UserName { get; set; }

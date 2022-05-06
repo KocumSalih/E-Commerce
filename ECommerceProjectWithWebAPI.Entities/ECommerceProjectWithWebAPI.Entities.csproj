@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Abstract\" />
-    <Folder Include="Concrete\BaseEntities\" />
-    <Folder Include="Dtos\UserDtos\" />
     <Folder Include="Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Core\ECommerceProjectWithWebAPI.Core.csproj" />
   </ItemGroup>
 
 </Project>

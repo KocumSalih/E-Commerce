@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ECommerceProjectWithWebAPI.Core.Entity.Abstract;
+using System;
 
 namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
 {
-    using Abstract;
-
     public class UserDto:IDto
     {
         public int UserId { get; set; }
