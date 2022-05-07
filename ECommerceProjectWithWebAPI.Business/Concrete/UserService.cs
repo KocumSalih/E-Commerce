@@ -1,5 +1,7 @@
 ﻿using ECommerceProjectWithWebAPI.Business.Abstract;
+using ECommerceProjectWithWebAPI.Business.Constants;
 using ECommerceProjectWithWebAPI.Core.Helpers.JWT;
+using ECommerceProjectWithWebAPI.Core.Utilities.Responses;
 using ECommerceProjectWithWebAPI.DAL.Abstract;
 using ECommerceProjectWithWebAPI.Entities.Concrete;
 using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
@@ -25,7 +27,7 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
             _appSettings = appSettings.Value;
         }
 
-        public async Task<IEnumerable<UserDetailDto>> GetListAsync()
+        public async Task<ApiDataResponse<IEnumerable<UserDetailDto>>> GetListAsync()
         {
             List<UserDetailDto> usersDetail = new List<UserDetailDto>();
             var response = await _userDal.GetListAsync();
@@ -44,10 +46,10 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 });
             }
 
-            return usersDetail;
+            return new SuccessApiDataResponse<IEnumerable<UserDetailDto>>(usersDetail,Messages.Listed);
         }
 
-        public async Task<UserDto> GetByIdAsync(int id)
+        public async Task<ApiDataResponse<UserDto>> GetByIdAsync(int id)
         {
             var user = await _userDal.GetAsync(x => x.Id == id);
             if (user != null)
@@ -63,12 +65,12 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                     Gender = user.Gender,
                     UserId = user.Id
                 };
-                return userDto;
+                return new SuccessApiDataResponse<UserDto>(userDto,Messages.Listed);
             }
-            return null;
+            return new ErrorApiDataResponse<UserDto>(null,Messages.NotListed);
         }
 
-        public async Task<UserDto> AddAsync(UserAddDto entity)
+        public async Task<ApiDataResponse<UserDto>> AddAsync(UserAddDto entity)
         {
             User user = new User()
             {
@@ -99,10 +101,10 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 UserId = userAdd.Id
             };
 
-            return userDto;
+            return new SuccessApiDataResponse<UserDto>(userDto,Messages.Added);
         }
 
-        public async Task<UserUpdateDto> UpdateAsync(UserUpdateDto entity)
+        public async Task<ApiDataResponse<UserUpdateDto>> UpdateAsync(UserUpdateDto entity)
         {
             var getUser = await _userDal.GetAsync(x => x.Id == entity.UserId);
             User user = new User()
@@ -135,41 +137,42 @@ namespace ECommerceProjectWithWebAPI.Business.Concrete
                 Password = userUpdated.Password,
                 UserId = userUpdated.Id
             };
-            return userUpdateDto;
+            return new SuccessApiDataResponse<UserUpdateDto>(userUpdateDto,Messages.Updated);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<ApiDataResponse<bool>> DeleteAsync(int id)
         {
-            return await _userDal.DeleteAsync(id);
+            var isDelete= await _userDal.DeleteAsync(id);
+            return new SuccessApiDataResponse<bool>(isDelete, Messages.Deleted);
         }
 
-        public async Task<AccessToken> Authenticate(UserForLoginDto userForLoginDto)
-        {
-            var user = await _userDal.GetAsync(x => x.UserName == userForLoginDto.UserName && x.Password == userForLoginDto.Password);
-            if (user == null)
-                return null;
+        //public async Task<ApiDataResponse<AccessToken>> Authenticate(UserForLoginDto userForLoginDto)
+        //{
+        //    var user = await _userDal.GetAsync(x => x.UserName == userForLoginDto.UserName && x.Password == userForLoginDto.Password);
+        //    if (user == null)
+        //        return null;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.SecurityKey);
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject=new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name,user.Id.ToString())
-                }),
-                Expires=DateTime.UtcNow.AddDays(7),
-                SigningCredentials=new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
-            };
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_appSettings.SecurityKey);
+        //    var tokenDescriptor = new SecurityTokenDescriptor()
+        //    {
+        //        Subject=new ClaimsIdentity(new[]
+        //        {
+        //            new Claim(ClaimTypes.Name,user.Id.ToString())
+        //        }),
+        //        Expires=DateTime.UtcNow.AddDays(7),
+        //        SigningCredentials=new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
+        //    };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            AccessToken accessToken = new AccessToken()
-            {
-                Token = tokenHandler.WriteToken(token),
-                Expiration = (DateTime)tokenDescriptor.Expires,
-                UserName =user.UserName,                
-                UserId=user.Id
-            };
-            return await Task.Run(() => accessToken);
-        }
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    AccessToken accessToken = new AccessToken()
+        //    {
+        //        Token = tokenHandler.WriteToken(token),
+        //        Expiration = (DateTime)tokenDescriptor.Expires,
+        //        UserName =user.UserName,                
+        //        UserId=user.Id
+        //    };
+        //    return await Task.Run(() => accessToken);
+        //}
     }
 }
