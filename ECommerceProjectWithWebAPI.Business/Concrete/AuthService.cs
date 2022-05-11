@@ -3,7 +3,8 @@ using ECommerceProjectWithWebAPI.Business.Abstract;
 using ECommerceProjectWithWebAPI.Business.Constants;
 using ECommerceProjectWithWebAPI.Core.Utilities.Responses;
 using ECommerceProjectWithWebAPI.Core.Utilities.Security.Token;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
+using ECommerceProjectWithWebAPI.Entities.Dtos.Auth;
+using ECommerceProjectWithWebAPI.Entities.Dtos.User;
 using System;
 using System.Threading.Tasks;
 

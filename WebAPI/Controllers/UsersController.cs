@@ -1,5 +1,5 @@
 ﻿using ECommerceProjectWithWebAPI.Business.Abstract;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
+using ECommerceProjectWithWebAPI.Entities.Dtos.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

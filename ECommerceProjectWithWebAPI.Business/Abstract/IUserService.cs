@@ -1,6 +1,6 @@
 ﻿using ECommerceProjectWithWebAPI.Core.Utilities.Responses;
 using ECommerceProjectWithWebAPI.Entities.Concrete;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
+using ECommerceProjectWithWebAPI.Entities.Dtos.User;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

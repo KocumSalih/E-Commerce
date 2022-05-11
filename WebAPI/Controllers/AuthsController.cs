@@ -1,12 +1,11 @@
 ﻿using ECommerceProjectWithWebAPI.Business.Abstract;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
-using Microsoft.AspNetCore.Authorization;
+using ECommerceProjectWithWebAPI.Entities.Dtos.Auth;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthsController : ControllerBase

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ECommerceProjectWithWebAPI.Entities.Concrete;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
+using ECommerceProjectWithWebAPI.Entities.Dtos.User;
 
 namespace ECommerceProjectWithWebAPI.Business.Mappings
 {

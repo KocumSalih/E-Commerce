@@ -5,7 +5,7 @@ using ECommerceProjectWithWebAPI.Core.Helpers.JWT;
 using ECommerceProjectWithWebAPI.Core.Utilities.Responses;
 using ECommerceProjectWithWebAPI.DAL.Abstract;
 using ECommerceProjectWithWebAPI.Entities.Concrete;
-using ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos;
+using ECommerceProjectWithWebAPI.Entities.Dtos.User;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
