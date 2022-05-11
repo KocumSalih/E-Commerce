@@ -2,6 +2,7 @@ using AutoMapper;
 using ECommerceProjectWithWebAPI.Business.Abstract;
 using ECommerceProjectWithWebAPI.Business.Concrete;
 using ECommerceProjectWithWebAPI.Business.Mappings;
+using ECommerceProjectWithWebAPI.Core.Extensions;
 using ECommerceProjectWithWebAPI.Core.Helpers.JWT;
 using ECommerceProjectWithWebAPI.Core.Utilities.Security.Token;
 using ECommerceProjectWithWebAPI.Core.Utilities.Security.Token.Jwt;
@@ -33,63 +34,13 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Swagger => swaggerý servislere ekleme ksýmýný burada yaptýk . Fakat kod kalabalýðýný engelemek adýna Core içerisindeki Extensions klasötrünün altýnda swaggerextensions clasý oluþturuldu ve IServiceCollection burada extend edilerek swagger ayarlarý orada yapýldý. 
+
             services.AddDbContext<ECommerceProjectWithWebAPIContext>(options => options.UseSqlServer("Server=DESKTOP-DPKMFQT\\S2019; Database=ECommerceProjectWithWebAPI; uid=sa; pwd=1;"));
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Bearer þemasýný kullanan JWT yetkilendirme baþlýðý \r\n\r\n 'Bearer' [Boþluk] giriniz."
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference=new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        new string[] {}
-                    }
-                });
-            });
-
-            #region JWT
-
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.SecurityKey);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-            #endregion
+            services.AddCustomSwagger();
+            services.AddCustomJwtTokken(Configuration);
 
             #region AutoMapper
 
@@ -116,8 +67,10 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
+                app.UseCustomSwagger();
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
+                
             }
 
             app.UseRouting();
