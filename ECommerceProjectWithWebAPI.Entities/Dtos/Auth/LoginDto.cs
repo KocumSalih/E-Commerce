@@ -1,4 +1,4 @@
-﻿namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
+﻿namespace ECommerceProjectWithWebAPI.Entities.Dtos.Auth
 {
     public class LoginDto
     {

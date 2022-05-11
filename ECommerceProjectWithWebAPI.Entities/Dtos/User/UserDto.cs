@@ -1,14 +1,14 @@
 ﻿using ECommerceProjectWithWebAPI.Core.Entity.Abstract;
 using System;
 
-namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
+namespace ECommerceProjectWithWebAPI.Entities.Dtos.User
 {
-    public class UserAddDto:IDto
+    public class UserDto:IDto
     {
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Password { get; set; }
         public bool Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }

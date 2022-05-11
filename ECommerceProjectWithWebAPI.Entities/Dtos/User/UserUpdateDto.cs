@@ -1,7 +1,7 @@
 ﻿using System;
 using ECommerceProjectWithWebAPI.Core.Entity.Abstract;
 
-namespace ECommerceProjectWithWebAPI.Entities.Dtos.UserDtos
+namespace ECommerceProjectWithWebAPI.Entities.Dtos.User
 {   
     public class UserUpdateDto:IDto
     {
