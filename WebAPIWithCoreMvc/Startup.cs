@@ -1,3 +1,5 @@
+using ECommerceProjectWithWebAPI.Business.Abstract;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPIWithCoreMvc.ApiServices;
+using WebAPIWithCoreMvc.ApiServices.Interfaces;
 
 namespace WebAPIWithCoreMvc
 {
@@ -23,6 +27,27 @@ namespace WebAPIWithCoreMvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
+            services.AddSession();
+            #region HttpClient
+            services.AddHttpClient<IAuthApiService, AuthApiService>(opt =>
+                {
+                    opt.BaseAddress = new Uri("http://localhost:62853/api/");
+                });
+            services.AddHttpClient<IUserApiService, UserApiService>(opt =>
+            {
+                opt.BaseAddress = new Uri("http://localhost:62853/api/");
+            });
+            #endregion
+            #region Cookie
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
+            {
+                opt.LoginPath = "/Admin/Auth/Login";
+                opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+                opt.SlidingExpiration = true;
+                opt.Cookie.Name = "mvccookie";
+            }); 
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +61,7 @@ namespace WebAPIWithCoreMvc
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();

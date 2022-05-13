@@ -12,4 +12,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Business\ECommerceProjectWithWebAPI.Business.csproj" />
+    <ProjectReference Include="..\ECommerceProjectWithWebAPI.Entities\ECommerceProjectWithWebAPI.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
